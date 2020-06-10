@@ -51,4 +51,4 @@ switch(command) {
 
 module.exports = {
    mdLinks
- }
+ }   

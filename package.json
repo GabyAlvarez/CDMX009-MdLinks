@@ -15,7 +15,7 @@
     "nodejs",
     "jest"
   ],
-  "author": "",
+  "author": "Gaby Alvarez",
   "license": "ISC",
   "bin": {
     "say-fine": "./app.js"
