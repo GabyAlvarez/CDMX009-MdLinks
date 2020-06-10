@@ -1,7 +1,9 @@
+#!/usr/bin/env node
+
 const funciones = require("./index.js")
 const chalk = require('chalk');
-
 const argvCommand = require('yargs')
+
    .command('validate', 'Valida los links que contiene el archivo .md',
          {
             'file': {
@@ -20,6 +22,21 @@ const argvCommand = require('yargs')
    .help()
    .argv
 
+   function mdLinks(routeFile, validateStats) {
+      return new Promise(async (resolve, reject) => {
+         
+         try {
+            let cadenaFile = await funciones.readFile(routeFile)
+            let links = funciones.procesarFile(cadenaFile, routeFile)
+            return resolve(validateStats ? funciones.validateLinks(links) : { links, "total":links.length});
+    
+         } catch(error) {
+             console.log(chalk.magenta(error))
+            return reject("No se pudo completar la operacion. "+ error);
+         }
+      })
+   }
+
 let command = argvCommand._[0];
 
 switch(command) {
@@ -32,17 +49,6 @@ switch(command) {
       console.log("comando no permitido")
 }
 
-function mdLinks(routeFile, validateStats) {
-   return new Promise(async (resolve, reject) => {
-      
-      try {
-         let cadenaFile = await funciones.readFile(routeFile)
-         let links = funciones.procesarFile(cadenaFile, routeFile)
-         return resolve(validateStats ? funciones.validateLinks(links) : { links, "total":links.length});
- 
-      } catch(error) {
-          console.log(chalk.magenta(error))
-         return reject("No se pudo completar la operacion. "+ error);
-      }
-   })
-}
+module.exports = {
+   mdLinks
+ }
