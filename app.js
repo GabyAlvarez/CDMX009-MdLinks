@@ -45,8 +45,8 @@ switch(command) {
       .then(data => console.log(data))
       .catch(error => console.log(error))
       break;
-   default:
-      console.log("comando no permitido")
+   //default:
+     // console.log("comando no permitido")
 }
 
 module.exports = {
